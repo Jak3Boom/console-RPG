@@ -1,0 +1,17 @@
+# Visual Studio build folders
+x64/
+Debug/
+Release/
+.vs/
+*.vcxproj*
+*.sln
+*.exe
+*.obj
+*.pdb
+*.ipch
+*.log
+*.user
+*.opensdf
+*.sdf
+*.cache
+*.ilk
