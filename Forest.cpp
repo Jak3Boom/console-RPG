@@ -8,7 +8,7 @@ void Forest::Enter()
 	std::cout << "Вы прибыли в " << name << "! Будьте осторожны!" << std::endl;
 }
 
-void Forest::Action()
+char Forest::Action()
 {
-
+	return '0';
 }

@@ -8,5 +8,5 @@ public:
 	Forest(const std::string& name, const std::string& desc);
 
 	void Enter() override;
-	void Action() override;
+	char Action() override;
 };

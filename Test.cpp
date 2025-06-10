@@ -9,11 +9,31 @@
 
 int main()
 {
+	// Предметы для городов
+#pragma region Items
+	std::vector<Item> nilfgaardItems = {
+		Item("Меч из драконьего камня", "Оружие", 5, 500),
+		Item("Ягоды", "Еда", 1, 100),
+		Item("Кинжал из замка", "Оружие", 3, 300)
+	};
+	std::vector<Item> novigradItems = {
+		Item("Походный нож", "Оружие", 2, 400),
+		Item("Зелье здоровья", "Используемое", 5, 600),
+		Item("Топор", "Оружие", 5, 700)
+	};
+	std::vector<Item> moscowItems = {
+		Item("Меч из драконьего камня", "Оружие", 5, 500),
+		Item("Ягоды", "Еда", 1, 100),
+		Item("Кинжал из замка", "Оружие", 3, 300)
+	};
+#pragma endregion
+
+
 	// Города (Nilfgaard, Novigrad, Moscow)
 #pragma region Locations
-	Town nilfgaard("Нильфгаард", "Город Золотых Башен");
-	Town novigrad("Новиград", "Город-государство, 'Столица мира Новиград'");
-	Town moscow("Москва", "Княжий град среди лесов");
+	Town nilfgaard("Нильфгаард", "Город Золотых Башен", "Магазин Нильфгаарда", nilfgaardItems);
+	Town novigrad("Новиград", "Город-государство, 'Столица мира Новиград'", "Магазин Новиграда", novigradItems);
+	Town moscow("Москва", "Княжий град среди лесов", "Магазин Москвы", moscowItems);
 	Forest darkForest("Мёртвый лес", "Злобная пучина местных земель...");
 #pragma endregion
 
@@ -71,7 +91,7 @@ int main()
 		switch (playerChoice)
 		{
 		case '1': // Исследование мира (город, лес)
-			handleWorldExploration(nilfgaard, novigrad, moscow, darkForest);
+			handleWorldExploration(player, nilfgaard, novigrad, moscow, darkForest);
 			break;
 		case '2': // Информация о персонаже/инвентарь
 			handleStatsAndInventory(player);
