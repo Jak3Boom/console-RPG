@@ -15,4 +15,5 @@ void Shop::ShowGoods() const
 									 << goods[i].getValue() << ") - "
 									 << goods[i].getPrice() << " золота" << std::endl;
 	}
+	std::cout << goods.size() + 1 << ". Выход" << std::endl;
 }

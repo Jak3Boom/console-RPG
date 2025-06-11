@@ -19,6 +19,7 @@ void handleWorldExploration(Player& player, Town& nilfgaard, Town& novigrad, Tow
 	std::cout << "Куда отправимся?\n1. Город\n2. На поиски приключений\n";
 	char choice;
 	std::cin >> choice;
+	clearConsole();
 
 	if (choice == '1')
 	{
@@ -40,6 +41,7 @@ void handleTownChoice(Player& player, Town& nilfgaard, Town& novigrad, Town& mos
 	std::cout << "Какой город хочешь посетить?\n1. Нильфгаард\n2. Новиград\n3. Москва\n";
 	char choice;
 	std::cin >> choice;
+	clearConsole();
 
 	bool inTheTown = true;
 
@@ -47,13 +49,15 @@ void handleTownChoice(Player& player, Town& nilfgaard, Town& novigrad, Town& mos
 	{
 		std::cout << "Отправляемся в Нильфгаард!" << std::endl;
 		//Sleep(2000);
-		std::cout << "..." << std::endl;
+		std::cout << "\n...\n" << std::endl;
 		//Sleep(2000);
 		nilfgaard.Enter();
+		//Sleep(2000);
 
 		while (inTheTown)
 		{
 			char actionChoice = nilfgaard.Action(); // Выбор действия (1. Магазин/торговец; 2. Карта)
+			clearConsole();
 			handleTownAction(actionChoice, player, nilfgaard, inTheTown);
 		}
 	}
@@ -103,6 +107,7 @@ void handleTownAction(char choice, Player& player, Town& town, bool& isInTheTown
 
 		char shopChoice;
 		std::cin >> shopChoice;
+		clearConsole();
 
 		handleShop(shopChoice, player, town);
 		break;
@@ -122,9 +127,14 @@ void handleShop(char choice, Player& player, Town& town)
 	case '1': // Показать товары
 		std::cout << "Пожалуйста, выбирайте!" << std::endl;
 		town.getShop().ShowGoods();
+		char shopChoice;
+		std::cin >> shopChoice;
+
+		// Сделать покупку предмета или выход из магазина
+
 		break;
 	case '2': // Выход
-
+		std::cout << "Всего хорошего! Заходите ещё!" << std::endl;
 		break;
 	default:
 		break;

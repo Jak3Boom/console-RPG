@@ -87,6 +87,7 @@ int main()
 
 		char playerChoice;
 		std::cin >> playerChoice; // Получаем выбор игрока
+		clearConsole();
 
 		switch (playerChoice)
 		{

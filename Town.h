@@ -15,7 +15,5 @@ public:
 	Shop& getShop() { return shop; }
 
 private:
-	std::string name;
-	std::string description;
 	Shop shop;
 };

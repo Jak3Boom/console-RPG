@@ -9,7 +9,7 @@ Town::Town(const std::string& name, const std::string& desc, const std::string& 
 void Town::Enter()
 {
 	std::cout << "Добро пожаловать в город " << name << "!" << std::endl;
-	std::cout << description << std::endl;
+	std::cout << description << "\n" << std::endl;
 }
 
 char Town::Action()
