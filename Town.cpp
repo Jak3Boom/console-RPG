@@ -17,6 +17,7 @@ char Town::Action()
 	std::cout << "=== МЕНЮ ГОРОДА ===" << std::endl;
 	std::cout << "1. Торговец" << std::endl;
 	std::cout << "2. Карта" << std::endl;
+	std::cout << "3. Покинуть город" << std::endl;
 
 	char choice;
 	std::cin >> choice;

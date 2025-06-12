@@ -1,6 +1,4 @@
 #pragma once
-#include <string>
-
 #include "Location.h"
 #include "Shop.h"
 
@@ -12,6 +10,7 @@ public:
 	void Enter() override;
 	char Action() override;
 
+	std::string getName() { return name; }
 	Shop& getShop() { return shop; }
 
 private:

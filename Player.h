@@ -9,16 +9,21 @@ class Enemy;
 class Player
 {
 public:
-	Player(std::string name) : hp(20), attack(2), gold(100), name(name) {}
+	Player(std::string name);
 
 	void ShowStats();
 	void TakeDamage(int dmg);
 	void Heal(int amount);
 
+	void buyItem(Item item);
 	void AddItemToInventory(Item item);
 	void ShowInventory();
 
 	void Fight(Enemy& enemy);
+
+	void addGold(int value);
+	void subtractGold(int value);
+	int getGold();
 
 private:
 	int hp;

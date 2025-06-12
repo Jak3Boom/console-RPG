@@ -16,22 +16,33 @@ void showMainMenu()
 // Обработчик места назначения
 void handleWorldExploration(Player& player, Town& nilfgaard, Town& novigrad, Town& moscow, Forest& darkForest)
 {
-	std::cout << "Куда отправимся?\n1. Город\n2. На поиски приключений\n";
-	char choice;
-	std::cin >> choice;
-	clearConsole();
+	bool exploring = true;
 
-	if (choice == '1')
+	while (exploring)
 	{
-		handleTownChoice(player, nilfgaard, novigrad, moscow);
-	}
-	else if (choice == '2')
-	{
-		handleAdventures(darkForest);
-	}
-	else
-	{
-		std::cout << "Такого варианта нет!" << std::endl;
+		std::cout << "Куда отправимся?\n1. Город\n2. На поиски приключений\n3. Выход в главное меню\n";
+
+		char worldChoice;
+		std::cin >> worldChoice;
+		clearConsole();
+
+		switch (worldChoice)
+		{
+		case '1':
+			handleTownChoice(player, nilfgaard, novigrad, moscow);
+			break;
+		case '2':
+			handleAdventures(darkForest);
+			break;
+		case '3':
+			exploring = false;
+			break;
+		default:
+			std::cout << "Такого варианта нет!" << std::endl;
+			Sleep(1000);
+			clearConsole();
+			break;
+		}
 	}
 }
 
@@ -107,16 +118,35 @@ void handleTownAction(char choice, Player& player, Town& town, bool& isInTheTown
 
 		char shopChoice;
 		std::cin >> shopChoice;
-		clearConsole();
 
 		handleShop(shopChoice, player, town);
 		break;
 	case '2': // Карта
-
+		showMap(town.getName());
+		break;
+	case '3': // Выход из города
+		std::cout << "Вы покидаете " << town.getName() << "! Счастливого пути!" << std::endl;
+		isInTheTown = false;
 		break;
 	default:
 		break;
 	}
+}
+
+void showMap(const std::string& currentLocation)
+{
+	std::cout << "=== КАРТА МИРА ===\n";
+	std::cout << "Города:\n";
+	std::cout << " - Нильфгаард" << (currentLocation == "Нильфгаард" ? " (вы здесь)" : "") << "\n";
+	std::cout << " - Новиград" << (currentLocation == "Новиград" ? " (вы здесь)" : "") << "\n";
+	std::cout << " - Москва" << (currentLocation == "Москва" ? " (вы здесь)" : "") << "\n";
+	std::cout << "Локации для приключений:\n";
+	std::cout << " - Тёмный лес" << (currentLocation == "Тёмный лес" ? " (Вы здесь)" : "") << "\n";
+	std::cout << "==================\n";
+	std::cout << "Нажмите Enter, чтобы вернуться...\n";
+	std::cin.ignore();
+	std::cin.get();
+	clearConsole();
 }
 
 // Обработчик действий магазина
@@ -125,19 +155,82 @@ void handleShop(char choice, Player& player, Town& town)
 	switch (choice)
 	{
 	case '1': // Показать товары
-		std::cout << "Пожалуйста, выбирайте!" << std::endl;
+		clearConsole();
+		std::cout << "Торговец: Пожалуйста, выбирайте!" << std::endl;
 		town.getShop().ShowGoods();
-		char shopChoice;
-		std::cin >> shopChoice;
+		handlePurchase(player, town);
 
-		// Сделать покупку предмета или выход из магазина
-
+		/*int shopChoice;
+		while (!(std::cin >> shopChoice))
+		{
+			clearConsole();
+			std::cin.clear();
+			std::cin.ignore(10000, '\n');
+			std::cout << "Торговец: Пожалуйста, выбирайте!" << std::endl;
+			town.getShop().ShowGoods();
+			std::cout << "Ошибка! Введите число." << std::endl;
+		}*/
 		break;
 	case '2': // Выход
 		std::cout << "Всего хорошего! Заходите ещё!" << std::endl;
+		//Sleep(1000);
+		clearConsole();
 		break;
 	default:
 		break;
+	}
+}
+
+// Обработчик покупки предмета
+void handlePurchase(Player& player, Town& town)
+{
+	int availableItems = town.getShop().getGoods().size(); // Получаем количество доступных предметов в текущем магазине
+
+	bool isInTheShop = true;
+	while (isInTheShop) // Цикл работает, пока не вышли из магазина
+	{
+		int choice;
+		while (!(std::cin >> choice)) // Проверка на int
+		{
+			clearConsole();
+			std::cin.clear();
+			std::cin.ignore(10000, '\n');
+			std::cout << "Торговец: Пожалуйста, выбирайте!" << std::endl;
+			town.getShop().ShowGoods();
+			std::cout << "Ошибка! Введите число." << std::endl;
+		}
+
+		if (choice == availableItems + 1)
+		{
+			std::cout << "Всего хорошего! Заходите ещё!" << std::endl;
+			//Sleep(1000);
+			clearConsole();
+			isInTheShop = false;
+		}
+
+		int itemIndex = choice - 1; // Получаем индекс предмета
+		if (itemIndex >= 0 && itemIndex < availableItems)
+		{
+			Item selectedItem = town.getShop().getGoods()[itemIndex]; // Получаем выбранный предмет
+
+			// Покупка товара
+			if (player.getGold() >= selectedItem.getPrice())
+			{
+				player.buyItem(selectedItem);
+				std::cout << "---------------------------------------------------------------\n";
+				std::cout << "Вы купили: " << selectedItem.getName() << ". Цена - " << selectedItem.getPrice() << " золота\n";
+				std::cout << "На счёте: " << player.getGold() << " золота\n";
+				std::cout << "---------------------------------------------------------------\n";
+			}
+			else
+			{
+				std::cout << "Недостаточно золота!" << std::endl;
+			}
+		}
+		else
+		{
+			std::cout << "Неверный выбор! Доступно товаров: 1-" << availableItems << std::endl;
+		}
 	}
 }
 

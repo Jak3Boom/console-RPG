@@ -5,6 +5,11 @@
 // Конструктор класса Shop
 Shop::Shop(const std::string& name, const std::vector<Item>& items) : shopName(name), goods(items) {}
 
+std::vector<Item> Shop::getGoods() const
+{
+	return goods;
+}
+
 // Показать товары
 void Shop::ShowGoods() const
 {

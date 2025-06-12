@@ -85,11 +85,11 @@ int main()
 	{
 		showMainMenu(); // Отображение главного меню: 1. Исследовать мир; 2. Открыть меню взаимодействия с персонажем; 3. Выйти из игры
 
-		char playerChoice;
-		std::cin >> playerChoice; // Получаем выбор игрока
+		char choice;
+		std::cin >> choice; // Получаем выбор игрока
 		clearConsole();
 
-		switch (playerChoice)
+		switch (choice)
 		{
 		case '1': // Исследование мира (город, лес)
 			handleWorldExploration(player, nilfgaard, novigrad, moscow, darkForest);
@@ -108,6 +108,5 @@ int main()
 			break;
 		}
 	}
-
 	return 0;
 }
