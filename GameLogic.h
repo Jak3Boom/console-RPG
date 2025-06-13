@@ -11,7 +11,8 @@ void handleTownAction(char choice, Player& player, Town& town, bool& isInTheTown
 void showMap(const std::string& currenLocation);
 void handleShop(char choice, Player& player, Town& town);
 void handlePurchase(Player& player, Town& town);
-void handleAdventures(Forest& darkForest);
+void handleAdventures(Player& player, Forest& darkForest);
+void handleAdventureAction(char choice, Player& player, Forest& darkForest, bool& isInTheLocation);
 void handleStatsAndInventory(Player& player);
 
 // Утилиты

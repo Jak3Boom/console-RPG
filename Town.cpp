@@ -14,10 +14,10 @@ void Town::Enter()
 
 char Town::Action()
 {
-	std::cout << "=== МЕНЮ ГОРОДА ===" << std::endl;
-	std::cout << "1. Торговец" << std::endl;
-	std::cout << "2. Карта" << std::endl;
-	std::cout << "3. Покинуть город" << std::endl;
+	std::cout << "=== МЕНЮ ГОРОДА ===\n";
+	std::cout << "1. Торговец\n";
+	std::cout << "2. Карта\n";
+	std::cout << "3. Покинуть город\n";
 
 	char choice;
 	std::cin >> choice;

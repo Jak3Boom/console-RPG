@@ -5,10 +5,14 @@
 class Enemy
 {
 public:
-	Enemy() : hp(20), attack(1) {}
+	Enemy();
+
+	void TakeDamage(int dmg);
+	int getAttack();
+	int getHP();
+	bool isDead();
 
 	void ShowStats();
-	void TakeDamage(int dmg);
 
 private:
 	std::string type;

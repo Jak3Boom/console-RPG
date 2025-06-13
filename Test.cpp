@@ -29,12 +29,12 @@ int main()
 #pragma endregion
 
 
-	// Города (Nilfgaard, Novigrad, Moscow)
+	// Города (Nilfgaard, Novigrad, Moscow) + локация (DarkForest)
 #pragma region Locations
 	Town nilfgaard("Нильфгаард", "Город Золотых Башен", "Магазин Нильфгаарда", nilfgaardItems);
 	Town novigrad("Новиград", "Город-государство, 'Столица мира Новиград'", "Магазин Новиграда", novigradItems);
 	Town moscow("Москва", "Княжий град среди лесов", "Магазин Москвы", moscowItems);
-	Forest darkForest("Мёртвый лес", "Злобная пучина местных земель...");
+	Forest darkForest("Тёмный лес", "Злобная пучина местных земель...");
 #pragma endregion
 
 	std::string introduction = "Welcome to my first game!";
@@ -67,13 +67,10 @@ int main()
 	std::cout << "Герой успешно создан:" << std::endl;
 	std::cout << "_______________________________________\n" << std::endl;
 	player.ShowStats();
-	std::cout << "_______________________________________" << std::endl;
-
-#pragma region padding
-	std::cout << std::endl;
-	std::cout << std::endl;
-	std::cout << std::endl;
-#pragma endregion
+	std::cout << "_______________________________________\n" << std::endl;
+	std::cout << "Нажмите Enter, чтобы продолжить...\n";
+	std::cin.ignore();
+	std::cin.get();
 
 	std::cout << "Приятной игры!" << std::endl;
 	//Sleep(3000);

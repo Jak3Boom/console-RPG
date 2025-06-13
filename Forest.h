@@ -9,4 +9,6 @@ public:
 
 	void Enter() override;
 	char Action() override;
+
+	std::string getName() { return name; }
 };

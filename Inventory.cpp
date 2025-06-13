@@ -15,12 +15,12 @@ void Inventory::OpenInventory()
 	else
 	{
 		std::cout << "\nИнвентарь:" << std::endl;
-		std::cout << "---------------------------------------------------------------" << std::endl;
 		for (int i = 0; i < bag.size(); ++i)
 		{
-			std::cout << bag[i].getName() << "(тип: " << bag[i].getType() << "; значение: " << bag[i].getValue() << ")\n";
+			std::cout << "-----------------------------------------------------------------" << std::endl;
+			std::cout << (i + 1) << ". " << bag[i].getName() << "(тип: " << bag[i].getType() << "; значение: " << bag[i].getValue() << ")\n";
 		}
-		std::cout << "\n---------------------------------------------------------------" << std::endl;
+		std::cout << "-----------------------------------------------------------------\n" << std::endl;
 
 		std::cout << std::endl;
 	}

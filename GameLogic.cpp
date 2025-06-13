@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "GameLogic.h"
 #include "Forest.h"
+#include "Enemy.h"
 
 // Отображение главного меню
 void showMainMenu()
@@ -32,7 +33,7 @@ void handleWorldExploration(Player& player, Town& nilfgaard, Town& novigrad, Tow
 			handleTownChoice(player, nilfgaard, novigrad, moscow);
 			break;
 		case '2':
-			handleAdventures(darkForest);
+			handleAdventures(player, darkForest);
 			break;
 		case '3':
 			exploring = false;
@@ -56,6 +57,7 @@ void handleTownChoice(Player& player, Town& nilfgaard, Town& novigrad, Town& mos
 
 	bool inTheTown = true;
 
+	// Выбор: Нильфгаард
 	if (choice == '1')
 	{
 		std::cout << "Отправляемся в Нильфгаард!" << std::endl;
@@ -67,24 +69,29 @@ void handleTownChoice(Player& player, Town& nilfgaard, Town& novigrad, Town& mos
 
 		while (inTheTown)
 		{
-			char actionChoice = nilfgaard.Action(); // Выбор действия (1. Магазин/торговец; 2. Карта)
+			char actionChoice = nilfgaard.Action(); // Выбор действия (1. Магазин/торговец; 2. Карта; 3. Покинуть город)
 			clearConsole();
 			handleTownAction(actionChoice, player, nilfgaard, inTheTown);
 		}
 	}
+	// Выбор: Новиград
 	else if (choice == '2')
 	{
 		std::cout << "Отправляемся в Новиград!" << std::endl;
 		//Sleep(2000);
-		std::cout << "..." << std::endl;
+		std::cout << "\n...\n" << std::endl;
 		//Sleep(2000);
 		novigrad.Enter();
+		//Sleep(2000);
 
 		while (inTheTown)
 		{
-			char actionChoice = novigrad.Action();
+			char actionChoice = novigrad.Action(); // Выбор действия (1. Магазин/торговец; 2. Карта)
+			clearConsole();
+			handleTownAction(actionChoice, player, novigrad, inTheTown);
 		}
 	}
+	// Выбор: Москва
 	else if (choice == '3')
 	{
 		std::cout << "Отправляемся в Москву!" << std::endl;
@@ -92,15 +99,20 @@ void handleTownChoice(Player& player, Town& nilfgaard, Town& novigrad, Town& mos
 		std::cout << "..." << std::endl;
 		//Sleep(2000);
 		moscow.Enter();
+		//Sleep(2000);
 
 		while (inTheTown)
 		{
-			char actionChoice = moscow.Action();
+			char actionChoice = moscow.Action(); // Выбор действия (1. Магазин/торговец; 2. Карта)
+			clearConsole();
+			handleTownAction(actionChoice, player, moscow, inTheTown);
 		}
 	}
 	else
 	{
 		std::cout << "Такого варианта нет!" << std::endl;
+		Sleep(1000);
+		clearConsole();
 	}
 }
 
@@ -159,17 +171,6 @@ void handleShop(char choice, Player& player, Town& town)
 		std::cout << "Торговец: Пожалуйста, выбирайте!" << std::endl;
 		town.getShop().ShowGoods();
 		handlePurchase(player, town);
-
-		/*int shopChoice;
-		while (!(std::cin >> shopChoice))
-		{
-			clearConsole();
-			std::cin.clear();
-			std::cin.ignore(10000, '\n');
-			std::cout << "Торговец: Пожалуйста, выбирайте!" << std::endl;
-			town.getShop().ShowGoods();
-			std::cout << "Ошибка! Введите число." << std::endl;
-		}*/
 		break;
 	case '2': // Выход
 		std::cout << "Всего хорошего! Заходите ещё!" << std::endl;
@@ -206,6 +207,7 @@ void handlePurchase(Player& player, Town& town)
 			//Sleep(1000);
 			clearConsole();
 			isInTheShop = false;
+			continue;
 		}
 
 		int itemIndex = choice - 1; // Получаем индекс предмета
@@ -235,7 +237,7 @@ void handlePurchase(Player& player, Town& town)
 }
 
 // Обработчик выбора приключений
-void handleAdventures(Forest& darkForest)
+void handleAdventures(Player& player, Forest& darkForest)
 {
 	std::cout << "Отправляемся в Тёмный лес!" << std::endl;
 	//Sleep(2000);
@@ -246,7 +248,31 @@ void handleAdventures(Forest& darkForest)
 	bool inTheLocation = true;
 	while (inTheLocation)
 	{
-		char actionChoice = darkForest.Action();
+		char actionChoice = darkForest.Action(); // Выбор действия (1. Сразиться с монстром; 2. Искать ресурсы; 3. Вернуться)
+		clearConsole();
+		handleAdventureAction(actionChoice, player, darkForest, inTheLocation);
+	}
+}
+
+void handleAdventureAction(char choice, Player& player, Forest& darkForest, bool& isInTheLocation)
+{
+	Enemy enemy;
+
+	switch (choice)
+	{
+	case '1': // Сражение с монстром
+		std::cout << "Осторожно, враг!\n";
+		player.Fight(enemy);
+		break;
+	case '2': // Поиск ресурсов
+
+		break;
+	case '3': // Выход из локации
+		std::cout << "Вы покидаете " << darkForest.getName() << "!\n";
+		isInTheLocation = false;
+		break;
+	default:
+		break;
 	}
 }
 
@@ -256,16 +282,27 @@ void handleStatsAndInventory(Player& player)
 	std::cout << "Выбирай:\n1. Характеристики героя\n2. Инвентарь\n";
 	char choice;
 	std::cin >> choice;
+	clearConsole();
 
 	if (choice == '1')
 	{
 		//Sleep(500);
+		std::cout << "_______________________________________\n" << std::endl;
 		player.ShowStats();
+		std::cout << "_______________________________________\n" << std::endl;
+		std::cout << "Нажмите Enter, чтобы вернуться...\n";
+		std::cin.ignore();
+		std::cin.get();
+		clearConsole();
 	}
 	else if (choice == '2')
 	{
 		//Sleep(500);
 		player.ShowInventory();
+		std::cout << "Нажмите Enter, чтобы вернуться...\n";
+		std::cin.ignore();
+		std::cin.get();
+		clearConsole();
 	}
 	else
 	{
